@@ -2,7 +2,7 @@
 
 A Ktor plugin that allows you to write cleaner code whilst building Slack bots with Ktor. 
 A simple wrapper around the event driven design Slack API follows with some classes to help 
-you focus on building and writing cleaner more testable code without having to inject `SlackApp` everywhere.
+you focus on building and writing cleaner more testable code without having to inject `App` everywhere.
 
 In order to use this plugin, you'll need to be familiar with the [Java Slack SDK](https://github.com/slackapi/java-slack-sdk) (including Bolt for Java) and it's functionality.
 
@@ -16,6 +16,7 @@ implementation("io.github.bradleyiw:ktor-slack-events-plugin:0.1.0-SNAPSHOT")
 3. [Events](#events)
    1. [Default Events](#supported-events)
    2. [Simple Events](#simple-events)
+   3. [Custom Events](#custom-events)
 
 ## Install Plugin
 Once you've added the library to your dependencies. You'll need to install the plugin into your Ktor application:
@@ -120,4 +121,25 @@ For some scenarios where you may receive event data through a submission context
      SimpleViewClosedSlackEvent(SimpleEventId.SIMPLE_VIEW_CLOSED_CALLBACK_ID.id)
    ```
   
+Feel free to raise an issue if you want me to add more. 
+
+### Custom Events
+
+You may need to do something outside these predefined events and just need access to the `App` instance. 
+You can create a class and implement `SlackEvent` directly for this. 
+
+```
+class ListOfPetButtonsEvent : SlackEvent {
+     override fun execute(app: App) {
+        val pets = listOf("dog", "cat", "pig", "hamster")
+        pets.forEach { pet ->
+            val actionId = "select-pet-action-${pet}"
+            app.blockAction(actionId) { _, ctx ->
+                ctx.ack()
+            }
+        }
+    }
+}
+```
+
 Feel free to raise an issue if you want me to add more. 
