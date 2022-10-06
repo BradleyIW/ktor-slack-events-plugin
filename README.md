@@ -14,7 +14,7 @@ implementation("io.github.bradleyiw:ktor-slack-events-plugin:0.1.0-SNAPSHOT")
 1. [Install Plugin](#install-plugin)
 2. [Add Containers](#add-event-containers)
 3. [Events](#events)
-   1. [Default Events](#default-events)
+   1. [Default Events](#supported-events)
    2. [Simple Events](#simple-events)
 
 ## Install Plugin
